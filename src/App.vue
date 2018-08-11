@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="appStyle">
+  <div :style="appStyle">
     <router-view v-bind:appStyle="appStyle" v-bind:location="location"></router-view>
   </div>
 </template>
@@ -9,7 +9,8 @@ export default {
   data: function(){
     return {
       appStyle: {
-        height: '100%'
+        height: '100%',
+        background: '#50C1E9'
       },
       location: {
         xLat: undefined,
@@ -28,7 +29,7 @@ export default {
 				// // 좌표값 조회가 존재하면
 				if( coordinates ) {
           // 실시간 미세먼지 조회
-					this.geoInfoToDistrictName(coordinates.lat, coordinates.lng);
+					self.geoInfoToDistrictName(coordinates.lat, coordinates.lng);
 				} else {
           self.location = undefined
         }
@@ -36,8 +37,8 @@ export default {
     },
 		geoInfoToDistrictName(lat, lng) {
       // 나중에 주석처리
-      lat = 37.4954841;
-      lng = 127.0333574;
+      // lat = 37.4954841;
+      // lng = 127.0333574;
 
       var self = this;
 			naver.maps.Service.reverseGeocode({
@@ -63,6 +64,7 @@ export default {
 		},
   },
   created() {
+    this.appStyle.background = '#50C1E9';
     if ( !this.location.xLat || !this.location.yLng ) {
       console.log('========================================App: 1');
       console.log('xLat : ' + this.location.xLat)

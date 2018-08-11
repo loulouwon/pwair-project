@@ -12,6 +12,7 @@
   "dependencies": {
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "axios": "^0.18.0",
+    "firebase": "^5.3.1",
     "vue": "^2.5.11",
     "vue-browser-geolocation": "^1.5.0",
     "vue-material": "^1.0.0-beta-10.2",

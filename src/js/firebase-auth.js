@@ -3,27 +3,43 @@ var button = document.querySelectorAll('button');
 var log = document.querySelector('p');
 // SNS Auth
 var provider = new firebase.auth.GoogleAuthProvider();
+// var provider = new firebase.auth.FacebookAuthProvider();
 
-var firebaseSignIn = function (event) {
-  event.preventDefault();
-  firebase.auth().signInWithEmailAndPassword(getEmail(), getPassword())
-  .then(function(result){
-    log.innerHTML = 'login success';
-    console.log(result);
-  })
-  .catch((error) => {
+var firebaseSignIn = function () {
+  if (exceptionHandler()) return true;
+  firebase.auth().signInWithEmailAndPassword(getEmail(), getPassword()).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode === 'auth/wrong-password') {
+      alert('Wrong password.');
+    } else {
+      alert(errorMessage);
+    }
     console.log(error);
+  }).then(function (user) {
+    console.log(user);
+    log.innerText = user.email + " has been logged in";
+    clearForm();
   });
 };
 
-var firebaseSignInWithGoogle = function (event) {
-  event.preventDefault();
-  firebase.auth().signInWithPopup(provider)
-  .then(function(result) {
-    console.log(result.user);
-  })
-  .catch(function(error) {
-    console.log(error);
+var firebaseSignInWithGoogle = function () {
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    var user = result.user;
+    console.log(result);
+    console.log("token : ", token);
+    console.log("user : ", user);
+  }).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    console.log("errorCode: " + errorCode + ". errorMessage : " + errorMessage + ". email : " + email);
   });
 };
 

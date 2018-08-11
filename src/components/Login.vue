@@ -8,34 +8,58 @@
          <span class="far fa-dizzy"></span>
      </div>
       <!-- .form-box shadow : S -->
-      <div class="form-box shadow">
-          <md-field md-clearable>
-              <label>Email</label>
-              <md-input type="text"></md-input>
-          </md-field>
+      <form @submit.prevent>
+        <div class="form-box shadow">
+            <md-field md-clearable>
+                <label>Email</label>
+                <md-input type="text" v-model="email"></md-input>
+            </md-field>
 
-          <md-field>
-              <label>Password</label>
-              <md-input type="password"></md-input>
-          </md-field>
-          <router-link to="/Main" class="md-raised">
-            <md-button class="btn-login">Login</md-button>
-          </router-link>
-      </div>
-      <!-- //.form-box shadow : E -->      
-      <div class="btn-wrap">
-          <md-button class="md-icon-button md-raised md-primary"><span class="fab fa-google"></span></md-button>
-          <md-button class="md-icon-button md-raised md-primary"><span class="fab fa-facebook-f"></span></md-button>
-      </div>
+            <md-field>
+                <label>Password</label>
+                <md-input type="password" v-model="password"></md-input>
+            </md-field>
+            <!-- <router-link to="/Main" class="md-raised">
+                <md-button class="btn-login">Login</md-button>
+            </router-link> -->
+            <md-button @click="login" class="btn-login">Login</md-button>
+        </div>
+        <!-- //.form-box shadow : E -->      
+        <div class="btn-wrap">
+            <md-button class="md-icon-button md-raised md-primary"><span class="fab fa-google"></span></md-button>
+            <md-button class="md-icon-button md-raised md-primary"><span class="fab fa-facebook-f"></span></md-button>
+        </div>
+      </form>
+
+    
   </div>
 </template>
 
+
 <script>
+
+// import firebase from 'firebase';
+
+// var provider = new firebase.auth.GoogleAuthProvider();
+
 export default {
   name: '',
   data: () => ({
-    
-  })
+    email:'',
+    password:'',
+  }),
+  methods:{
+      login(){
+          firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+          .then(response => {
+            console.log(response);
+            this.$router.push('/main');
+          })
+          .catch(error => {
+              console.log(error)
+          });
+      }
+  },
 }
 </script>
 

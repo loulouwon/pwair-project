@@ -65,7 +65,7 @@ export default {
         var url = 'http://openapi.seoul.go.kr:8088/746a5361636a6f7337336e4f656579/json/RealtimeCityAir/1/25/';
         this.$http.get(url).then((result) => {
           console.log(result)
-          if (result.data.RealtimeCityAir.RESULT.CODE == "INFO-000") {
+          if (result.data.RealtimeCityAir.RESULT.CODE == "INFO-000") {          
             var airData = result.data.RealtimeCityAir.row;
             airData.find((obj, i) => {
               if( obj.MSRSTE_NM === sigugun) {
@@ -102,9 +102,11 @@ export default {
         break;
         default:
       }
+      console.log('appStyle: ', this.appStyle)
     }
 	},
   created() {
+
 		if ( this.location.xLat && this.location.yLng && this.location.sigugun ) {
 			console.log(1111111111111111)
 			console.log('========================================Main: 1');
